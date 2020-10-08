@@ -84,6 +84,11 @@ extension EmployeeDetailTableViewController {
 }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        dobLabel.textColor = .black
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .medium
+        dobLabel.text = dateformatter.string(from: dobDatePicker.date)
         
         if indexPath == birthDateLabelIndex {
             isEditingBirthday = !isEditingBirthday
