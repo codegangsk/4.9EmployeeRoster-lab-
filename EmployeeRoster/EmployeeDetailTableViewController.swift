@@ -23,7 +23,7 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     }
     let birthDateLabelIndex = IndexPath(row: 1, section: 0)
     let birthDatePickerIndex = IndexPath(row: 2, section: 0)
-    
+    let dateFormatter = DateFormatter()
 }
 
 extension EmployeeDetailTableViewController {
@@ -39,7 +39,6 @@ extension EmployeeDetailTableViewController {
         if let employee = employee {
             navigationItem.title = employee.name
             nameTextField.text = employee.name
-            let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dobLabel.text = dateFormatter.string(from: employee.dateOfBirth)
             dobLabel.textColor = .black
@@ -62,6 +61,10 @@ extension EmployeeDetailTableViewController {
     @IBAction func cancelButtonTapped(_ sender: Any) {
         employee = nil
         performSegue(withIdentifier: PropertyKeys.unwindToListIndentifier, sender: self)
+    }
+    
+    @IBAction func datePickerChanged(_ sender: UIDatePicker) {
+        dobLabel.text = dateFormatter.string(from: sender.date)
     }
 }
 
