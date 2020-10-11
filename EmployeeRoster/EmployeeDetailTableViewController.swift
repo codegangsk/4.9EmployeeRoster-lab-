@@ -13,7 +13,11 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     
     @IBOutlet var employeeTypeLabel: UILabel!
     
-    var employee: Employee?
+    var employee: Employee? {
+        didSet {
+            print("\(employee!)")
+        }
+    }
     
     var isEditingBirthday: Bool = false {
         didSet {
@@ -53,7 +57,7 @@ extension EmployeeDetailTableViewController {
 extension EmployeeDetailTableViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
         if let name = nameTextField.text {
-            employee = Employee(name: name, dateOfBirth: Date(), employeeType: .exempt)
+            employee = Employee(name: name, dateOfBirth: dobDatePicker.date, employeeType: .exempt)
             performSegue(withIdentifier: PropertyKeys.unwindToListIndentifier, sender: self)
         }
     }
