@@ -22,8 +22,19 @@ enum EmployeeType {
 
 struct Employee {
     
-    var name: String
-    var dateOfBirth: Date
+    var name: String = ""
+    var dateOfBirth: Date = Date()
     var employeeType: EmployeeType
     
 }
+
+extension Employee: CustomStringConvertible {
+    var description: String {
+        return """
+            firstName: \(name)
+            dateOfBirth: \(dateOfBirth)
+            employeetype: \(employeeType)
+            """
+    }
+}
+

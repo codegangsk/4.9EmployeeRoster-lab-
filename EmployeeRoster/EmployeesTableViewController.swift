@@ -1,7 +1,7 @@
 
 import UIKit
 
-class EmployeeListTableViewController: UITableViewController {
+class EmployeesTableViewController: UITableViewController {
 
     struct PropertyKeys {
         static let employeeCellIdentifier = "EmployeeCell"
@@ -9,7 +9,11 @@ class EmployeeListTableViewController: UITableViewController {
         static let editEmployeeSegueIdentifier = "EditEmployeeSegue"
     }
     
-    var employees: [Employee] = []
+    var employees: [Employee] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +33,7 @@ class EmployeeListTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.employeeCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EmployeeCell", for: indexPath)
 
         let employee = employees[indexPath.row]
         cell.textLabel?.text = employee.name

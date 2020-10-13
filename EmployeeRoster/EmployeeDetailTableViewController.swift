@@ -15,7 +15,7 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     
     var employee: Employee? {
         didSet {
-            print("\(employee!)")
+           print("\(employee)")
         }
     }
     var employeeType: EmployeeType? {
@@ -80,12 +80,11 @@ extension EmployeeDetailTableViewController {
             performSegue(withIdentifier: PropertyKeys.unwindToListIndentifier, sender: self)
     }
 
-    
     @IBAction func cancelButtonTapped(_ sender: Any) {
         employee = nil
         performSegue(withIdentifier: PropertyKeys.unwindToListIndentifier, sender: self)
     }
-    
+
     @IBAction func datePickerChanged(_ sender: UIDatePicker) {
         dobLabel.text = dateFormatter.string(from: sender.date)
     }
