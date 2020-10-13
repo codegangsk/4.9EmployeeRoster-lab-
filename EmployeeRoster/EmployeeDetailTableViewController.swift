@@ -1,7 +1,7 @@
 
 import UIKit
 
-class EmployeeDetailTableViewController: UITableViewController, UITextFieldDelegate {
+class EmployeeDetailTableViewController: UITableViewController, UITextFieldDelegate, EmployeeTypeDelegate {
 
     struct PropertyKeys {
         static let unwindToListIndentifier = "UnwindToListSegue"
@@ -16,6 +16,11 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     var employee: Employee? {
         didSet {
             print("\(employee!)")
+        }
+    }
+    var employeeType: EmployeeType? {
+        didSet {
+            print("\(employeeType!)")
         }
     }
     
@@ -33,34 +38,48 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
 extension EmployeeDetailTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateView()
+        print("view did load")
     }
 }
 
 extension EmployeeDetailTableViewController {
     func updateView() {
-        if let employee = employee {
+        if let employee = employee, let employeeType = employeeType {
             navigationItem.title = employee.name
             nameTextField.text = employee.name
             dateFormatter.dateStyle = .medium
             dobLabel.text = dateFormatter.string(from: employee.dateOfBirth)
             dobLabel.textColor = .black
-            employeeTypeLabel.text = employee.employeeType.description()
+            employeeTypeLabel.text = employeeType.description()
             employeeTypeLabel.textColor = .black
         } else {
             navigationItem.title = "New Employee"
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowEmployeeType" {
+            let destinationViewController = segue.destination as? EmployeeTypeTableViewController
+            destinationViewController?.delegate = self
+        }
+    }
+    
+    func didSelect(employeeType: EmployeeType) {
+        self.employeeType = employeeType
+        employeeTypeLabel.text = "\(employeeType.description())"
+        employeeTypeLabel.textColor = .black
+    }
 }
 
 extension EmployeeDetailTableViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
-        if let name = nameTextField.text {
-            employee = Employee(name: name, dateOfBirth: dobDatePicker.date, employeeType: .exempt)
-            performSegue(withIdentifier: PropertyKeys.unwindToListIndentifier, sender: self)
+        if let unwrappedEmployeeName = nameTextField.text, let unwrappedEmployeeType = employeeType {
+            employee = Employee(name: unwrappedEmployeeName, dateOfBirth: dobDatePicker.date, employeeType: unwrappedEmployeeType)
         }
+            performSegue(withIdentifier: PropertyKeys.unwindToListIndentifier, sender: self)
     }
+
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
         employee = nil

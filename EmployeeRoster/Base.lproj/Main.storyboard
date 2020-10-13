@@ -194,7 +194,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="6iu-a2-AXT" kind="show" id="YwK-Eg-oAC"/>
+                                            <segue destination="6iu-a2-AXT" kind="show" identifier="ShowEmployeeType" id="YwK-Eg-oAC"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

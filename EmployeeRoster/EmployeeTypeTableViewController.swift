@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol EmployeeTypeDelegate: class {
+    func didSelect(employeeType: EmployeeType)
+}
+
 class EmployeeTypeTableViewController: UITableViewController {
+    var delegate : EmployeeTypeDelegate?
     var employeeType: EmployeeType?
 }
 
@@ -46,6 +51,7 @@ extension EmployeeTypeTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         employeeType = EmployeeType.all[indexPath.row]
+        delegate?.didSelect(employeeType: employeeType!)
         tableView.reloadData()
     }
 }
